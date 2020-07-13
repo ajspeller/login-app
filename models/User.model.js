@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const mongooseHidden = require('mongoose-hidden')();
+
 const { Schema } = mongoose;
 
 const minlength = [
@@ -19,8 +21,11 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    // required: true,
+    required: true,
+    hide: true,
   },
 });
 
-module.exports = mongoose.model('Users', UserSchema);
+UserSchema.plugin(mongooseHidden);
+
+module.exports = mongoose.model('User', UserSchema, 'users');
